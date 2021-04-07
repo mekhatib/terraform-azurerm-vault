@@ -43,9 +43,12 @@ module "consul_servers" {
   #source = "git::git@github.com:mekhatib/terraform-azurerm-consul.git//modules/consul-cluster?ref=v0.0.5"
   source               = "app.terraform.io/Demo-Mahil/consul/azurerm" 
   
+  tenant_id = "${var.tenant_id}"
+  subscription_id = "${var.subscription_id}"
+  
   cluster_name = "${var.consul_cluster_name}"
   cluster_size = "${var.num_consul_servers}"
-  key_data = "${var.key_data}"
+  secret_access_key = "${var.key_data}"
 
   resource_group_name = "${var.resource_group_name}"
   storage_account_name = "${var.storage_account_name}"
@@ -53,7 +56,7 @@ module "consul_servers" {
   location = "${var.location}"
   custom_data = "${data.template_file.custom_data_consul.rendered}"
   instance_size = "${var.instance_size}"
-  image_id = "${var.image_uri}"
+  image_uri  = "${var.image_uri}"
   subnet_id = "${azurerm_subnet.consul.id}"
   allowed_inbound_cidr_blocks = []
 }
