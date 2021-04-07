@@ -50,7 +50,7 @@ resource "azurerm_lb_nat_pool" "vault_lbnatpool" {
 
 resource "azurerm_lb_probe" "vault_probe" {
   resource_group_name = "${var.resource_group_name}"
-  loadbalancer_id = azurerm_lb.vault_access[count.index].id
+  loadbalancer_id = azurerm_lb.vault_access.id
   name                = "vault-running-probe"
   port                = "${var.api_port}"
 }
@@ -58,7 +58,7 @@ resource "azurerm_lb_probe" "vault_probe" {
 resource "azurerm_lb_backend_address_pool" "vault_bepool" {
   count = "${var.associate_public_ip_address_load_balancer ? 1 : 0}"
   resource_group_name = "${var.resource_group_name}"
-  loadbalancer_id = "${azurerm_lb.vault_access.id}"
+  loadbalancer_id = azurerm_lb.vault_access[count.index].id
   name = "BackEndAddressPool"
 }
 
