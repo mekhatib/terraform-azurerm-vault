@@ -67,7 +67,7 @@ resource "azurerm_lb_rule" "vault_api_port" {
   count = "${var.associate_public_ip_address_load_balancer ? 1 : 0}"
   resource_group_name = "${var.resource_group_name}"
   name = "vault-api"
-  loadbalancer_id = "${azurerm_lb.vault_access.id}"
+  loadbalancer_id = azurerm_lb.vault_access[count.index].id
   protocol = "Tcp"
   frontend_port = "${var.api_port}"
   backend_port = "${var.api_port}"
