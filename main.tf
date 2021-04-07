@@ -49,7 +49,7 @@ module "consul_servers" {
   secret_access_key = "${var.secret_access_key}"
   
   cluster_name = "${var.consul_cluster_name}"
-  cluster_size = "${var.num_consul_servers}"
+  num_servers = "${var.num_consul_servers}"
   key_data = "${var.key_data}"
  
   resource_group_name = "${var.resource_group_name}"
