@@ -62,6 +62,7 @@ module "consul_servers" {
   image_uri  = "${var.image_uri}"
   subnet_id = "${azurerm_subnet.consul.id}"
   ConsulVnet = "${azurerm_virtual_network.consul.name}"
+  subnet_address = "{azurerm_subnet.consul.address_prefix}"
   allowed_inbound_cidr_blocks = []
 }
 
