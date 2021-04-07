@@ -49,8 +49,9 @@ resource "azurerm_lb_nat_pool" "vault_lbnatpool" {
 }
 
 resource "azurerm_lb_probe" "vault_probe" {
+  count = "${var.associate_public_ip_address_load_balancer ? 1 : 0}"
   resource_group_name = "${var.resource_group_name}"
-  loadbalancer_id = azurerm_lb.vault_access.id
+  loadbalancer_id = azurerm_lb.vault_access[count.index].id
   name                = "vault-running-probe"
   port                = "${var.api_port}"
 }
@@ -198,7 +199,7 @@ resource "azurerm_virtual_machine_scale_set" "vault_with_load_balancer" {
     managed_disk_type = "Standard_LRS"
   }
 
-  tags {
+  tags = {
     scaleSetName = "${var.cluster_name}"
   }
 }
