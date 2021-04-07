@@ -123,7 +123,7 @@ module "vault_servers" {
 data "template_file" "custom_data_vault" {
   template = "${file("${path.module}/custom-data-vault.sh")}"
 
-  vars {
+  vars = {
     scale_set_name = "${var.consul_cluster_name}"
     subscription_id = "${var.subscription_id}"
     tenant_id = "${var.tenant_id}"
