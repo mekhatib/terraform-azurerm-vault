@@ -32,7 +32,7 @@ resource "azurerm_lb" "vault_access" {
 
   frontend_ip_configuration {
     name = "PublicIPAddress"
-    public_ip_address_id = "${azurerm_public_ip.vault_access.id}"
+    public_ip_address_id = azurerm_public_ip.vault_access[count.index]
   }
 }
 
