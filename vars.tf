@@ -42,10 +42,10 @@ variable "subnet_id" {
   description = "Subnet ID of consul network"
 }
 
-#variable "allowed_inbound_cidr_blocks" {
- # description = "A list of CIDR-formatted IP address ranges from which the Azure Instances will allow connections to Consul"
- # type        = "list"
-#}
+variable "allowed_inbound_cidr_blocks" {
+  description = "A list of CIDR-formatted IP address ranges from which the Azure Instances will allow connections to Consul"
+  type        = "list"
+}
 
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
