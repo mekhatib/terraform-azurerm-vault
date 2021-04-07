@@ -101,7 +101,7 @@ module "vault_servers" {
   source = "./modules/vault-cluster"
 
   cluster_name = "${var.vault_cluster_name}"
-  num_servers = "${var.num_vault_servers}"
+  cluster_size = "${var.num_vault_servers}"
   key_data = "${var.key_data}"
 
   resource_group_name = "${var.resource_group_name}"
