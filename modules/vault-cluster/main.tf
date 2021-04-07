@@ -5,12 +5,12 @@ terraform {
 #---------------------------------------------------------------------------------------------------------------------
 # CREATE STORAGE BUCKET
 # ---------------------------------------------------------------------------------------------------------------------
-resource "azurerm_storage_container" "vault" {
-  name                  = "${var.storage_container_name}"
+#resource "azurerm_storage_container" "vault" {
+#  name                  = "${var.storage_container_name}"
   #resource_group_name   = "${var.resource_group_name}"
-  storage_account_name  = "${var.storage_account_name}"
-  container_access_type = "private"
-}
+#  storage_account_name  = "${var.storage_account_name}"
+#  container_access_type = "private"
+#}
 
 #---------------------------------------------------------------------------------------------------------------------
 # CREATE A LOAD BALANCER
