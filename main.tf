@@ -43,6 +43,7 @@ module "consul_servers" {
   #source = "git::git@github.com:mekhatib/terraform-azurerm-consul.git//modules/consul-cluster?ref=v0.0.5"
   source               = "app.terraform.io/Demo-Mahil/consul/azurerm" 
   
+  client_id = "${var.client_id}"
   tenant_id = "${var.tenant_id}"
   subscription_id = "${var.subscription_id}"
   secret_access_key = "${var.secret_access_key}"
