@@ -38,6 +38,10 @@ variable "key_data" {
   description = "The SSH public key that will be added to SSH authorized_users on the consul instances"
 }
 
+variable "subnet_id" {
+  description = "Subnet ID of consul network"
+}
+
 #variable "allowed_inbound_cidr_blocks" {
  # description = "A list of CIDR-formatted IP address ranges from which the Azure Instances will allow connections to Consul"
  # type        = "list"
