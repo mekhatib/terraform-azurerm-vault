@@ -45,11 +45,12 @@ module "consul_servers" {
   
   tenant_id = "${var.tenant_id}"
   subscription_id = "${var.subscription_id}"
+  secret_access_key = "${var.secret_access_key}"
   
   cluster_name = "${var.consul_cluster_name}"
   cluster_size = "${var.num_consul_servers}"
-  secret_access_key = "${var.key_data}"
-
+  key_data = "${var.key_data}"
+ 
   resource_group_name = "${var.resource_group_name}"
   storage_account_name = "${var.storage_account_name}"
 
