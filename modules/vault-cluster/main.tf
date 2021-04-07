@@ -72,8 +72,8 @@ resource "azurerm_lb_rule" "vault_api_port" {
   frontend_port = "${var.api_port}"
   backend_port = "${var.api_port}"
   frontend_ip_configuration_name = "PublicIPAddress"
-  backend_address_pool_id = "${azurerm_lb_backend_address_pool.vault_bepool.id}"
-  probe_id = "${azurerm_lb_probe.vault_probe.id}"
+  backend_address_pool_id = azurerm_lb_backend_address_pool.vault_bepool[count.index].id
+  probe_id = azurerm_lb_probe.vault_probe[count.index].id
 }
 
 #---------------------------------------------------------------------------------------------------------------------
