@@ -61,6 +61,7 @@ module "consul_servers" {
   instance_size = "${var.instance_size}"
   image_uri  = "${var.image_uri}"
   subnet_id = "${azurerm_subnet.consul.id}"
+  ConsulVnet = "${azurerm_virtual_network.consul.name}"
   allowed_inbound_cidr_blocks = []
 }
 
