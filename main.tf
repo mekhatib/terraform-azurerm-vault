@@ -71,7 +71,7 @@ module "consul_servers" {
 data "template_file" "custom_data_consul" {
   template = "${file("${path.module}/custom-data-consul.sh")}"
 
-  vars {
+  vars ={
     scale_set_name = "${var.consul_cluster_name}"
     subscription_id = "${var.subscription_id}"
     tenant_id = "${var.tenant_id}"
