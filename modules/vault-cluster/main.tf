@@ -116,6 +116,7 @@ resource "azurerm_virtual_machine_scale_set" "vault" {
 
     ip_configuration {
       name = "VaultIPConfiguration"
+      primary = true
       subnet_id = "${var.subnet_id}"
     }
   }
