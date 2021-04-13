@@ -80,64 +80,65 @@ resource "azurerm_lb_rule" "vault_api_port" {
 # CREATE A VIRTUAL MACHINE SCALE SET TO RUN VAULT (WITHOUT LOAD BALANCER)
 # ---------------------------------------------------------------------------------------------------------------------
 
-resource "azurerm_virtual_machine_scale_set" "vault" {
-  count = "${var.associate_public_ip_address_load_balancer ? 0 : 1}"
-  name = "${var.cluster_name}"
-  location = "${var.location}"
-  resource_group_name = "${var.resource_group_name}"
-  upgrade_policy_mode = "Manual"
 
-  sku {
-    name = "${var.instance_size}"
-    tier = "${var.instance_tier}"
-    capacity = "${var.cluster_size}"
-  }
+#resource "azurerm_virtual_machine_scale_set" "vault" {
+# count = "${var.associate_public_ip_address_load_balancer ? 0 : 1}"
+ # name = "${var.cluster_name}"
+ # location = "${var.location}"
+ # resource_group_name = "${var.resource_group_name}"
+ # upgrade_policy_mode = "Manual"
 
-  os_profile {
-    computer_name_prefix = "${var.vault_computer_name_prefix}"
-    admin_username = "${var.vault_admin_user_name}"
+  #sku {
+   # name = "${var.instance_size}"
+    #tier = "${var.instance_tier}"
+    #capacity = "${var.cluster_size}"
+ #}
+
+  #os_profile {
+   # computer_name_prefix = "${var.vault_computer_name_prefix}"
+    #admin_username = "${var.vault_admin_user_name}"
 
     #This password is unimportant as it is disabled below in the os_profile_linux_config
-    admin_password = "Passwword1234"
-    custom_data = "${var.custom_data}"
-  }
+    #admin_password = "Passwword1234"
+    #custom_data = "${var.custom_data}"
+  #}
 
-  os_profile_linux_config {
-    disable_password_authentication = true
+  #os_profile_linux_config {
+   # disable_password_authentication = true
 
-    ssh_keys {
-      path = "/home/${var.vault_admin_user_name}/.ssh/authorized_keys"
-      key_data = "${var.key_data}"
-    }
-  }
+    #ssh_keys {
+    #  path = "/home/${var.vault_admin_user_name}/.ssh/authorized_keys"
+     # key_data = "${var.key_data}"
+    #}
+  #}
 
-  network_profile {
-    name = "VaultNetworkProfile"
-    primary = true
+  #network_profile {
+  #  name = "VaultNetworkProfile"
+  #  primary = true
 
-    ip_configuration {
-      name = "VaultIPConfiguration"
-      primary = true
-      subnet_id = "${var.subnet_id}"
-    }
-  }
+   # ip_configuration {
+    #  name = "VaultIPConfiguration"
+    #  primary = true
+    #  subnet_id = "${var.subnet_id}"
+    #}
+  #}
 
-  storage_profile_image_reference {
-    id = "${var.image_id}"
-  }
+  #storage_profile_image_reference {
+  #  id = "${var.image_id}"
+  #}
 
-  storage_profile_os_disk {
-    name = ""
-    caching = "ReadWrite"
-    create_option = "FromImage"
-    os_type = "Linux"
-    managed_disk_type = "Standard_LRS"
-  }
+  #storage_profile_os_disk {
+  #  name = ""
+  #  caching = "ReadWrite"
+  #  create_option = "FromImage"
+  #  os_type = "Linux"
+  #  managed_disk_type = "Standard_LRS"
+  #}
 
-  tags = {
-    scaleSetName = "${var.cluster_name}"
-  }
-}
+  #tags = {
+  #  scaleSetName = "${var.cluster_name}"
+  #}
+#}
 
 #---------------------------------------------------------------------------------------------------------------------
 # CREATE A VIRTUAL MACHINE SCALE SET TO RUN VAULT (WITH LOAD BALANCER)
