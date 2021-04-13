@@ -77,7 +77,7 @@ module "consul_servers" {
   custom_data = "${data.template_file.custom_data_consul.rendered}"
   instance_size = "${var.instance_size}"
   image_uri  = "${var.image_uri}"
-  subnet_id = "${azurerm_subnet.consul.id}"
+  subnet_id = data.terraform_remote_state.sec.outputs.vnet_subnets[0]
   ConsulVnet = data.terraform_remote_state.sec.outputs.resourcegroup
   subnet_address = data.terraform_remote_state.sec.outputs.vnet_subnets_prefix[0]
   allowed_inbound_cidr_blocks = []
