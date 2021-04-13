@@ -13,7 +13,7 @@ data "terraform_remote_state" "sec" {
 
   config = {
     hostname = "app.terraform.io"
-    token = "${var.TerraformToken}"
+    #token = "${var.TerraformToken}"
     organization = "Demo-Mahil"
     workspaces = {
       name = "DEMO_SECNET"
