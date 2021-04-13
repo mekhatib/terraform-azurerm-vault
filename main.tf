@@ -6,6 +6,23 @@
 # examples/consul-image/consul.json Packer template.
 # ---------------------------------------------------------------------------------------------------------------------
 
+
+###### Using networking variables created in DEMO_SECNET Workspace)
+data "terraform_remote_state" "sec" {
+  backend = "remote"
+
+  config = {
+    hostname = "app.terraform.io"
+    token = "${var.TerraformToken}"
+    organization = "Demo-Mahil"
+    workspaces = {
+      name = "DEMO_SECNET"
+    }
+  }
+}
+
+
+
 provider "azurerm" {
   #subscription_id = "${var.subscription_id}"
   #client_id = "${var.client_id}"
@@ -21,18 +38,18 @@ terraform {
 # ---------------------------------------------------------------------------------------------------------------------
 # CREATE THE NECESSARY NETWORK RESOURCES FOR THE EXAMPLE
 # ---------------------------------------------------------------------------------------------------------------------
-resource "azurerm_virtual_network" "consul" {
-  name = "consulvn"
-  address_space = ["${var.address_space}"]
-  location = "${var.location}"
-  resource_group_name = "${var.resource_group_name}"
-}
+#resource "azurerm_virtual_network" "consul" {
+ # name = "consulvn"
+ # address_space = ["${var.address_space}"]
+ # location = "${var.location}"
+ # resource_group_name = data.terraform_remote_state.sec.outputs.resourcegroup
+#}
 
-resource "azurerm_subnet" "consul" {
-  name = "consulsubnet"
-  resource_group_name = "${var.resource_group_name}"
-  virtual_network_name = "${azurerm_virtual_network.consul.name}"
-  address_prefix = "${var.subnet_address}"
+#resource "azurerm_subnet" "consul" {
+#  name = "consulsubnet"
+#  resource_group_name = "${var.resource_group_name}"
+#  virtual_network_name = "${azurerm_virtual_network.consul.name}"
+#  address_prefix = "${var.subnet_address}"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -53,7 +70,7 @@ module "consul_servers" {
   num_servers = "${var.num_consul_servers}"
   key_data = "${var.key_data}"
  
-  resource_group_name = "${var.resource_group_name}"
+  resource_group_name = data.terraform_remote_state.sec.outputs.resourcegroup
   storage_account_name = "${var.storage_account_name}"
 
   location = "${var.location}"
@@ -61,8 +78,8 @@ module "consul_servers" {
   instance_size = "${var.instance_size}"
   image_uri  = "${var.image_uri}"
   subnet_id = "${azurerm_subnet.consul.id}"
-  ConsulVnet = "${azurerm_virtual_network.consul.name}"
-  subnet_address = "{azurerm_subnet.consul.address_prefix}"
+  ConsulVnet = data.terraform_remote_state.sec.outputs.resourcegroup
+  subnet_address = data.terraform_remote_state.sec.outputs.vnet_subnets_prefix[0]
   allowed_inbound_cidr_blocks = []
 }
 
@@ -107,14 +124,14 @@ module "vault_servers" {
   cluster_size = "${var.num_vault_servers}"
   key_data = "${var.key_data}"
 
-  resource_group_name = "${var.resource_group_name}"
+  resource_group_name = data.terraform_remote_state.sec.outputs.resourcegroup
   storage_account_name = "${var.storage_account_name}"
 
   location = "${var.location}"
   custom_data = "${data.template_file.custom_data_vault.rendered}"
   instance_size = "${var.instance_size}"
   image_id = "${var.image_uri}"
-  subnet_id = "${azurerm_subnet.consul.id}"
+  subnet_id = data.terraform_remote_state.sec.outputs.vnet_subnets[0]
   storage_container_name = "vault"
   associate_public_ip_address_load_balancer = true
 }
