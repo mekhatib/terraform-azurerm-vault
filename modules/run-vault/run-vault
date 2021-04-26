@@ -155,7 +155,7 @@ function generate_supervisor_config {
   log_info "Creating Supervisor config file to run Vault in $supervisor_config_path"
   cat > "$supervisor_config_path" <<EOF
 [program:vault]
-command=$vault_bin_dir/vault server -config $vault_config_dir -log-level=$vault_log_level
+command=$vault_bin_dir/sudo vault server -config $vault_config_dir -log-level=$vault_log_level
 stdout_logfile=$vault_log_dir/vault-stdout.log
 stderr_logfile=$vault_log_dir/vault-error.log
 numprocs=1
