@@ -129,6 +129,8 @@ ha_storage "consul" {
   scheme  = "http"
   service = "vault"
 
+ ui = true
+
   # HA settings
   api_addr = "https://$instance_ip_address:$port"
   cluster_addr  = "https://$instance_ip_address:$cluster_port"
